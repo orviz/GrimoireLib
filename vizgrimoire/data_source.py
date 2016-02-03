@@ -319,6 +319,7 @@ class DataSource(object):
         db_identities = Report.get_config()['generic']['db_identities']
         dbuser = Report.get_config()['generic']['db_user']
         dbpass = Report.get_config()['generic']['db_password']
+        dbhost = Report.get_config()['generic']['db_host']
 
         studies = Report.get_studies()
 
@@ -327,7 +328,7 @@ class DataSource(object):
         ds_dbname = ds.get_db_name()
         dbname = Report.get_config()['generic'][ds_dbname]
         dsquery = ds.get_query_builder()
-        dbcon = dsquery(dbuser, dbpass, dbname, db_identities)
+        dbcon = dsquery(dbuser, dbpass, dbname, db_identities, host=dbhost)
         evol_txt = "evol"
         if not evol: evol_txt = "agg"
         logging.info("Creating studies for " + ds.get_name() + " " + evol_txt)

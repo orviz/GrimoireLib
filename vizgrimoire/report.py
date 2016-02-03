@@ -139,6 +139,9 @@ class Report(object):
             db_projects = Report._automator['generic']['db_projects']
         dbuser = Report._automator['generic']['db_user']
         dbpass = Report._automator['generic']['db_password']
+        dbhost = Report._automator['generic']['db_host']
+
+	print ">>>>>> TYPE(Report._automator): ", type(Report._automator)
 
         # Read all available metrics installed in GrimoireLib egg
         metrics_pkg = "vizgrimoire.metrics"
@@ -178,7 +181,7 @@ class Report(object):
                 metric_filters = Report.get_default_filter()
                 if (ds.get_global_filter(ds) is not None):
                     metric_filters.global_filter = ds.get_global_filter(ds)
-                metrics = metrics_class(builder(dbuser, dbpass, db, db_identities, db_projects), metric_filters)
+                metrics = metrics_class(builder(dbuser, dbpass, db, db_identities, db_projects, host=dbhost), metric_filters)
                 ds.add_metrics(metrics, ds)
                 if ds == ITS.ITS:
                     db_its1_name = ITS_1.ITS_1.get_db_name()
@@ -267,7 +270,8 @@ class Report(object):
         db = Report._automator['generic'][ds.get_db_name()]
         dbuser = Report._automator['generic']['db_user']
         dbpassword = Report._automator['generic']['db_password']
-        SetDBChannel (database=db, user=dbuser, password=dbpassword)
+        dbhost = Report._automator['generic']['db_host']
+        SetDBChannel (database=db, user=dbuser, password=dbpassword, host=dbhost)
 
     @staticmethod
     def get_data_sources():

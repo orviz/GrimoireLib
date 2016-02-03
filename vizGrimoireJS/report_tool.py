@@ -241,6 +241,7 @@ def create_reports_studies(period, startdate, enddate, destdir):
     db_identities= Report.get_config()['generic']['db_identities']
     dbuser = Report.get_config()['generic']['db_user']
     dbpass = Report.get_config()['generic']['db_password']
+    dbhost = Report.get_config()['generic']['db_host']
 
     studies = Report.get_studies()
 
@@ -250,7 +251,7 @@ def create_reports_studies(period, startdate, enddate, destdir):
         ds_dbname = ds.get_db_name()
         dbname = Report.get_config()['generic'][ds_dbname]
         dsquery = ds.get_query_builder()
-        dbcon = dsquery(dbuser, dbpass, dbname, db_identities)
+        dbcon = dsquery(dbuser, dbpass, dbname, db_identities, host=dbhost)
         # logging.info(ds.get_name() + " studies active " + str(studies))
         for study in studies:
             logging.info("Creating report for " + study.id + " for " + ds.get_name())
