@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 #
 # Copyright (C) 2014 Bitergia
-# 
+#
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -248,7 +248,7 @@ def dataFrame2Dict(data):
         if (len(colvalues) == 1):
             dict_[colname] = valRtoPython(colvalues[0])
         else:
-            for j in colvalues: 
+            for j in colvalues:
                 dict_[colname].append(valRtoPython(j))
     return dict_
 
@@ -258,16 +258,16 @@ def getPeriod(granularity, number = None):
     if (granularity == 'years'):
         period = 'year'
         nperiod = 365
-    elif (granularity == 'months'): 
+    elif (granularity == 'months'):
         period = 'month'
         nperiod = 31
-    elif (granularity == 'weeks'): 
+    elif (granularity == 'weeks'):
         period = 'week'
         nperiod = 7
-    elif (granularity == 'days'): 
+    elif (granularity == 'days'):
         period = 'day'
         nperiod = 1
-    else: 
+    else:
         logging.error("Incorrect period:",granularity)
         sys.exit(1)
     if (number): return nperiod
@@ -543,6 +543,10 @@ def completeTops(tops, details, backend_name='bugzilla'):
     completed_tops = dict(tops.items())
     completed_tops['summary'] = []
     completed_tops['url'] = []
+
+    # FIXME (orviz) tops['issue_id'] not always a list (?¿)
+    if not isinstance(tops['issue_id'], list):
+        tops['issue_id'] = [tops['issue_id']]
 
     for issue_id in tops['issue_id']:
         info = details[issue_id]
